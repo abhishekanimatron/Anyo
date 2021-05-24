@@ -11,3 +11,29 @@ export async function doesUsernameExist(username) {
 
   return result.docs.map((user) => user.data().length > 0);
 }
+
+// get user from firestore passed where userid is equal to userid from auth
+export async function getUserByUserId(userId) {
+  const result = await firebase
+    .firestore()
+    .collection("users")
+    .where("userId", "==", userId)
+    .get();
+
+  // we get user information, alongside we also pass on document's id for CRUD operations
+  const user = result.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id,
+  }));
+  return user;
+}
+
+export async function getSuggestedProfiles(userId, following) {
+  const result = await firebase.firestore().collection("users").limit(10).get();
+  return result.docs
+    .map((user) => ({ ...user.data(), docId: user.id }))
+    .filter(
+      (profile) =>
+        profile.userId !== userId && !following.includes(profile.userId)
+    );
+}
