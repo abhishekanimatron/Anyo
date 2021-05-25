@@ -23,6 +23,7 @@ export default function SuggestedProfile({
   }
 
   return !followed ? (
+    // profile's info
     <div className="flex flex-row items-center align-items justify-between">
       <div className="flex items-center justify-between">
         <img
