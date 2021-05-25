@@ -1,4 +1,5 @@
 import React from "react";
+import Post from "./post/index";
 import usePhotos from "../hooks/usePhotos";
 import Skeleton from "react-loading-skeleton";
 
@@ -15,7 +16,7 @@ export default function Timeline() {
         </>
       ) : photos?.length > 0 ? (
         // map over photos and display them
-        photos.map((content) => <p key={content.docId}>{content.imageSrc}</p>)
+        photos.map((content) => <Post key={content.docId} content={content} />)
       ) : (
         // else display this message
         <p className="text-center text-2xl">Follow for photos by friends</p>
