@@ -63,12 +63,12 @@ export default function Actions({
           </svg>
           {/* comment button */}
           <svg
-            // onClick={handleFocus}
-            // onKeyDown={(event) => {
-            //   if (event.key === 'Enter') {
-            //     handleFocus();
-            //   }
-            // }}
+            onClick={handleFocus}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") {
+                handleFocus();
+              }
+            }}
             className="w-8 text-black-light select-none cursor-pointer focus:outline-none"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
