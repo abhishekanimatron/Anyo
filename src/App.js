@@ -6,6 +6,7 @@ import IsUserLoggedIn from "./helper/isUserLoggedIn";
 import useAuthListener from "./hooks/useAuthListener";
 import UserContext from "./context/user";
 
+// lazy load imports so we get only what we need, making document size smaller
 const Login = lazy(() => import("./pages/login"));
 const SignUp = lazy(() => import("./pages/sign-up"));
 const Dashboard = lazy(() => import("./pages/dashboard"));
@@ -33,13 +34,14 @@ export default function App() {
               user={user}
               loggedInPath={ROUTES.DASHBOARD}
               path={ROUTES.SIGN_UP}
+              exact
             >
               <SignUp />
             </IsUserLoggedIn>
+            <Route path={ROUTES.PROFILE} component={Profile} />
             <ProtectedRoutes user={user} path={ROUTES.DASHBOARD}>
               <Dashboard />
             </ProtectedRoutes>
-            <Route path={ROUTES.PROFILE} component={Profile} />
             {/* not found page having no specific path */}
             <Route component={NotFound} />
           </Switch>
