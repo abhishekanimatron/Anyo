@@ -39,6 +39,7 @@ export default function SignUp() {
           fullName,
           emailAddress: emailAddress.toLowerCase(),
           following: [],
+          followers: [],
           dateCreated: Date.now(),
         });
         history.push(ROUTES.DASHBOARD);
@@ -51,6 +52,7 @@ export default function SignUp() {
     }
     //else throw error message
     else {
+      setUsername("");
       setError("Username already taken, try another");
     }
   }; //on successfull entries //no error

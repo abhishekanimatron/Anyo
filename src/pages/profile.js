@@ -15,7 +15,7 @@ export default function Profile() {
     async function checkUserExists() {
       // gets user
       const [user] = await getUserByUsername(username);
-      if (user.userId) {
+      if (user?.userId) {
         setUser(user);
       } else {
         // if no user

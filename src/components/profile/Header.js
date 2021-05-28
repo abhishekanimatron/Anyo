@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import UserContext from "../../context/user";
 import useUser from "../../hooks/useUser";
 import PropTypes from "prop-types";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
 
 export default function Header({
@@ -17,7 +18,8 @@ export default function Header({
     followers = [],
   },
 }) {
-  const { user } = useUser();
+  const { user: loggedInUser } = useContext(UserContext);
+  const { user } = useUser(loggedInUser?.uid);
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
   const activeFollowButton = user.username && user.username !== profileUsername;
 

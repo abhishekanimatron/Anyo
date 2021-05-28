@@ -2,7 +2,6 @@ import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import * as ROUTES from "./constants/routes";
 import ProtectedRoutes from "./helper/protectedRoute";
-import IsUserLoggedIn from "./helper/isUserLoggedIn";
 import useAuthListener from "./hooks/useAuthListener";
 import UserContext from "./context/user";
 
@@ -23,23 +22,10 @@ export default function App() {
         <Suspense fallback={<p>Loading...</p>}>
           {/* Routes to specific pages using constant route file & route checks */}
           <Switch>
-            <IsUserLoggedIn
-              user={user}
-              loggedInPath={ROUTES.DASHBOARD}
-              path={ROUTES.LOGIN}
-            >
-              <Login />
-            </IsUserLoggedIn>
-            <IsUserLoggedIn
-              user={user}
-              loggedInPath={ROUTES.DASHBOARD}
-              path={ROUTES.SIGN_UP}
-              exact
-            >
-              <SignUp />
-            </IsUserLoggedIn>
+            <Route path={ROUTES.LOGIN} component={Login} />
+            <Route path={ROUTES.SIGN_UP} component={SignUp} />
             <Route path={ROUTES.PROFILE} component={Profile} />
-            <ProtectedRoutes user={user} path={ROUTES.DASHBOARD}>
+            <ProtectedRoutes user={user} path={ROUTES.DASHBOARD} exact>
               <Dashboard />
             </ProtectedRoutes>
             {/* not found page having no specific path */}
