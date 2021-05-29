@@ -14,14 +14,15 @@ export default function Header({
     userId: profileUserId,
     fullName,
     username: profileUsername,
-    following = [],
-    followers = [],
+    following,
+    followers,
   },
 }) {
   const { user: loggedInUser } = useContext(UserContext);
   const { user } = useUser(loggedInUser?.uid);
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
-  const activeFollowButton = user.username && user.username !== profileUsername;
+  const activeFollowButton =
+    user?.username && user?.username !== profileUsername;
 
   const handleToggleFollow = async () => {
     setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
@@ -46,18 +47,24 @@ export default function Header({
       // converts to truthy/falsey value (!!)
       setIsFollowingProfile(!!isFollowing);
     };
-    if (user.username && profileUserId) {
+    if (user?.username && profileUserId) {
       isLoggedUserFollowingProfile();
     }
-  }, [profileUserId, user.username]);
+  }, [user?.username, profileUserId]);
 
   return (
     <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-md">
-      <div className="container flex justify-center">
-        {user.username && (
+      <div className="container flex justify-center items-center">
+        {profileUsername ? (
           <img
             alt={`${user.username} profile`}
             src={`/images/avatars/${profileUsername}.jpg`}
+            className="rounded-full h-40 w-50 flex"
+          />
+        ) : (
+          <img
+            alt={`Super's profile`}
+            src={`/images/avatars/super.jpg`}
             className="rounded-full h-40 w-50 flex"
           />
         )}
@@ -81,7 +88,7 @@ export default function Header({
           )}
         </div>
         <div className="container flex ">
-          {followers === undefined || following === undefined ? (
+          {!followers || !following ? (
             <Skeleton count={1} width={500} height={25} />
           ) : (
             <>
